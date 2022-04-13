@@ -1,4 +1,4 @@
-[![Docker Pulls](https://img.shields.io/docker/pulls/zaherg/git-hours.svg)](https://hub.docker.com/r/zaherg/git-hours/) [![](https://images.microbadger.com/badges/image/zaherg/git-hours.svg)](https://microbadger.com/images/zaherg/git-hours "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/zaherg/git-hours.svg)](https://microbadger.com/images/zaherg/git-hours "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/commit/zaherg/git-hours.svg)](https://microbadger.com/images/zaherg/git-hours "Get your own commit badge on microbadger.com")
+[![Docker Pulls](https://img.shields.io/docker/pulls/yehorb/git-hours-docker.svg)](https://hub.docker.com/r/yehorb/git-hours-docker/) [![](https://images.microbadger.com/badges/image/yehorb/git-hours-docker.svg)](https://microbadger.com/images/yehorb/git-hours-docker "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/yehorb/git-hours-docker.svg)](https://microbadger.com/images/yehorb/git-hours-docker "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/commit/yehorb/git-hours-docker.svg)](https://microbadger.com/images/yehorb/git-hours-docker "Get your own commit badge on microbadger.com")
 
 
 # Git-Hours
@@ -68,7 +68,7 @@ Help
 Install [docker](http://www.docker.com/) and run the following command inside the git repo you want to analyze:
 
 ```
-docker run --rm -v $(pwd):/code zaherg/git-hours
+docker run --rm -v $(pwd):/code yehorb/git-hours
 ```
 
 It mounts the current directory (pwd) inside the docker container and runs `git hours` on it.
