@@ -12,5 +12,6 @@ docker build \
     --build-arg IMAGE_NAME=$IMAGE_NAME \
     --build-arg VCS_REF=$COMMIT_HASH \
     --compress \
+    --memory 4096g \
     --tag $IMAGE_NAME \
     .

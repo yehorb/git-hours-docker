@@ -1,28 +1,20 @@
-FROM node:14-alpine as build
+FROM node:14-alpine3.15 as build
 
 RUN set -eux; \
     apk update; \
     apk add \
-        curl-dev \
-        g++ \
-        gcc \
-        git \
+        build-base \
         krb5-dev \
-        krb5-libs \
-        libc-dev \
-        libressl-dev \
-        make \
+        libcom_err \
+        pcre-dev \
         python3 \
     ; \
+    npm config set global true; \
+    npm config set production true; \
     npm config set unsafe-perm true; \
-    BUILD_ONLY=true npm install --global \
-        nodegit@^0.27.0 \
-    ; \
-    npm install --global \
+    BUILD_ONLY=true npm install \
         git-hours@1.5.0 \
     ;
-
-FROM node:14-alpine
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -39,10 +31,6 @@ LABEL Maintainer="Yehor Borkov <yehor.borkov@gmail.com>" \
 RUN set -eux; \
     apk update; \
     apk add --no-cache \
-        git \
-        krb5-libs \
-        libc-dev \
-        libressl-dev \
         tini \
     ; \
     rm -rf \
@@ -51,10 +39,6 @@ RUN set -eux; \
         /var/cache/apk/* \
     ;
 
-COPY --from=build /usr/local/lib/node_modules/ /usr/local/lib/node_modules/
-
 WORKDIR /var/task
 
-ENTRYPOINT ["/sbin/tini", "--"]
-
-CMD ["/usr/local/bin/node", "/usr/local/lib/node_modules/git-hours/src/index.js"]
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/node", "/usr/local/lib/node_modules/git-hours/src/index.js"]
