@@ -31,7 +31,6 @@ LABEL Maintainer="Yehor Borkov <yehor.borkov@gmail.com>" \
       Description="Light Docker image (based on alpine) for using git-hours." \
       org.label-schema.name=$IMAGE_NAME \
       org.label-schema.description="Light Docker image (based on alpine) for using git-hours." \
-      org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-url="https://github.com/yehorb/git-hours-docker.git" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.schema-version="1.0.0"

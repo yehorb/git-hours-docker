@@ -3,14 +3,12 @@ set -eux
 
 TAG=${1:-latest}
 
-BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 IMAGE_NAME=yehorb/git-hours:$TAG
 COMMIT_HASH=`git rev-parse --short HEAD`
 IMAGE_COMMIT=yehorb/git-hours:$TAG-$COMMIT_HASH
 
 docker build \
     --file Dockerfile \
-    --build-arg BUILD_DATE=$BUILD_DATE \
     --build-arg IMAGE_NAME=$IMAGE_NAME \
     --build-arg VCS_REF=$COMMIT_HASH \
     --compress \
