@@ -7,6 +7,7 @@ RUN set -eux; \
         g++ \
         gcc \
         git \
+        krb5-dev \
         krb5-libs \
         libc-dev \
         libressl-dev \
