@@ -1,5 +1,7 @@
 FROM node:14-alpine3.15 as build
 
+# git-hours required nodegit. nodegit has C++ sources, and requires building from
+# source, as there are no prebuilt package for alpine.
 RUN set -eux; \
     apk update; \
     apk add \
@@ -15,21 +17,20 @@ RUN set -eux; \
     BUILD_ONLY=true npm install \
         git-hours@1.5.0 \
     ; \
-    mv -f \
-        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/build/Release/ \
-        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/Release/ \
-    ; \
+    # Cleaning up after nodegit build. Essentially only build/Release/*.node files
+    # are required for module to work properly in alpine.
+    NODEGIT=/usr/local/lib/node_modules/git-hours/node_modules/nodegit; \
     rm -rf \
-        /usl/local/lib/node_modules/git-hours/node_modules/nodegit/Release/.deps \
-        /usl/local/lib/node_modules/git-hours/node_modules/nodegit/Release/obj.target \
-        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/build/* \
-        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/vendor \
+        $NODEGIT/vendor \
     ; \
-    mv -f \
-        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/Release/ \
-        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/build/Release/ \
+    # Delete all files from build directory (including files from build/Release
+    # subdirectories) except for the *.node files from build/Release directory.
+    find $NODEGIT/build \
+        ! -regex .*/Release/[^/]*\.node \
+        -delete \
     ;
 
+# Two-stage build allows not worrying too much about cleaning up build dependencies.
 FROM node:14-alpine3.15
 
 ARG BUILD_DATE
