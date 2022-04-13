@@ -1,7 +1,7 @@
 FROM node:14-alpine3.15 as build
 
-# git-hours required nodegit. nodegit has C++ sources, and requires building from
-# source, as there are no prebuilt package for alpine.
+# git-hours depends on nodegit. nodegit has C++ sources, and building from source
+# is required, as there are no prebuilt package for alpine.
 RUN set -eux; \
     apk update; \
     apk add \
@@ -30,7 +30,7 @@ RUN set -eux; \
         -delete \
     ;
 
-# Two-stage build allows not worrying too much about cleaning up build dependencies.
+# Two-stage build skips cleaning up build dependencies, caches, npm configuration.
 FROM node:14-alpine3.15
 
 ARG IMAGE_NAME
