@@ -16,6 +16,8 @@ RUN set -eux; \
         git-hours@1.5.0 \
     ;
 
+FROM node:14-alpine3.15
+
 ARG BUILD_DATE
 ARG VCS_REF
 ARG IMAGE_NAME
@@ -31,6 +33,7 @@ LABEL Maintainer="Yehor Borkov <yehor.borkov@gmail.com>" \
 RUN set -eux; \
     apk update; \
     apk add --no-cache \
+        krb5-libs \
         tini \
     ; \
     rm -rf \
@@ -38,6 +41,10 @@ RUN set -eux; \
         /usr/share/man \
         /var/cache/apk/* \
     ;
+
+COPY --from=build \
+    /usr/local/lib/node_modules/git-hours \
+    /usr/local/lib/node_modules/git-hours
 
 WORKDIR /var/task
 
