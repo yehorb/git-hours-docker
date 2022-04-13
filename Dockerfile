@@ -33,17 +33,16 @@ RUN set -eux; \
 # Two-stage build allows not worrying too much about cleaning up build dependencies.
 FROM node:14-alpine3.15
 
-ARG BUILD_DATE
-ARG VCS_REF
 ARG IMAGE_NAME
+ARG COMMIT_HASH
 
 LABEL Maintainer="Yehor Borkov <yehor.borkov@gmail.com>" \
       Description="Light Docker image (based on alpine) for using git-hours." \
-      org.label-schema.name=$IMAGE_NAME \
-      org.label-schema.description="Light Docker image (based on alpine) for using git-hours." \
-      org.label-schema.vcs-url="https://github.com/yehorb/git-hours-docker.git" \
-      org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.schema-version="1.0.0"
+      org.opencontainers.image.title=$IMAGE_NAME \
+      org.opencontainers.image.version="1.5.0" \
+      org.opencontainers.image.description="Light Docker image (based on alpine) for using git-hours." \
+      org.opencontainers.image.source="https://github.com/yehorb/git-hours-docker.git" \
+      org.opencontainers.image.revision=$COMMIT_HASH
 
 RUN set -eux; \
     apk update; \
