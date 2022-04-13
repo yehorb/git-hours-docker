@@ -14,6 +14,20 @@ RUN set -eux; \
     npm config set unsafe-perm true; \
     BUILD_ONLY=true npm install \
         git-hours@1.5.0 \
+    ; \
+    mv -f \
+        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/build/Release/ \
+        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/Release/ \
+    ; \
+    rm -rf \
+        /usl/local/lib/node_modules/git-hours/node_modules/nodegit/Release/.deps \
+        /usl/local/lib/node_modules/git-hours/node_modules/nodegit/Release/obj.target \
+        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/build/* \
+        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/vendor \
+    ; \
+    mv -f \
+        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/Release/ \
+        /usr/local/lib/node_modules/git-hours/node_modules/nodegit/build/Release/ \
     ;
 
 FROM node:14-alpine3.15
