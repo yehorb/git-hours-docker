@@ -28,6 +28,13 @@ RUN set -eux; \
     find $NODEGIT/build \
         ! -regex .*/Release/[^/]*\.node \
         -delete \
+    ; \
+    # Force downgrade of the commander dependency, as pinned ^8.0.0 version has some
+    # breaking changes which are not accomodated for in 1.5.0 release of git-hours.
+    cd /usr/local/lib/node_modules/git-hours; \
+    npm install \
+        --global=false \
+        commander@^6.0.0 \
     ;
 
 # Two-stage build skips cleaning up build dependencies, caches, npm configuration.
