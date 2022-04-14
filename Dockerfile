@@ -44,10 +44,10 @@ ARG IMAGE_NAME
 ARG COMMIT_HASH
 
 LABEL Maintainer="Yehor Borkov <yehor.borkov@gmail.com>" \
-      Description="Light Docker image (based on alpine) for using git-hours." \
+      Description="git-hours - Light Docker image (based on alpine)." \
       org.opencontainers.image.title=$IMAGE_NAME \
       org.opencontainers.image.version="1.5.0" \
-      org.opencontainers.image.description="Light Docker image (based on alpine) for using git-hours." \
+      org.opencontainers.image.description="git-hours - Light Docker image (based on alpine)." \
       org.opencontainers.image.source="https://github.com/yehorb/git-hours-docker.git" \
       org.opencontainers.image.revision=$COMMIT_HASH
 
