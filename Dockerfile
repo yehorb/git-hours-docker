@@ -61,6 +61,10 @@ RUN set -eux; \
         /tmp/* \
         /usr/share/man \
         /var/cache/apk/* \
+    ; \
+    ln -sf \
+        /usr/local/lib/node_modules/git-hours/src/index.js \
+        /usr/local/bin/git-hours \
     ;
 
 COPY --from=build \
@@ -69,4 +73,5 @@ COPY --from=build \
 
 WORKDIR /var/task
 
-ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/node", "/usr/local/lib/node_modules/git-hours/src/index.js"]
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["/usr/local/bin/git-hours"]
