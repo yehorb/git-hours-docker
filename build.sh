@@ -3,7 +3,7 @@ set -eux
 
 TAG=${1:-latest}
 IMAGE_NAME='yehorb/git-hours'
-COMMIT_HASH=`git rev-parse --short HEAD`
+COMMIT_HASH=$(git rev-parse --short HEAD)
 IMAGE_COMMIT="$IMAGE_NAME:$COMMIT_HASH"
 IMAGE_TAG="$IMAGE_NAME:$TAG"
 
