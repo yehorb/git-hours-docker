@@ -6,19 +6,28 @@ RUN set -eux; \
     apk update; \
     apk add \
         build-base \
+        git \
         krb5-dev \
         libcom_err \
         pcre-dev \
         python3 \
-    ; \
+    ;
+
+# Installing and building as separate RUN steps helps caching, and does not affect image
+# size as we are using two-stage build.
+RUN set -eux; \
     npm config set global true; \
     npm config set production true; \
     npm config set unsafe-perm true; \
     BUILD_ONLY=true npm install \
-        git-hours@1.5.0 \
-    ; \
-    # Cleaning up after nodegit build. Essentially only build/Release/*.node files
-    # are required for module to work properly in alpine.
+        # Latest master commit at a time, not available on npmjs.
+        https://github.com/kimmobrunfeldt/git-hours.git#c589eea5174ee6439b68b4b437e443e7b6e4bf7b \
+    ;
+
+
+# Cleaning up after nodegit build. Essentially only build/Release/*.node files
+# are required for module to work properly in alpine.
+RUN set -eux; \
     NODEGIT=/usr/local/lib/node_modules/git-hours/node_modules/nodegit; \
     rm -rf \
         $NODEGIT/vendor \
@@ -28,13 +37,6 @@ RUN set -eux; \
     find $NODEGIT/build \
         ! -regex .*/Release/[^/]*\.node \
         -delete \
-    ; \
-    # Force downgrade of the commander dependency, as pinned ^8.0.0 version has some
-    # breaking changes which are not accomodated for in 1.5.0 release of git-hours.
-    cd /usr/local/lib/node_modules/git-hours; \
-    npm install \
-        --global=false \
-        commander@^6.0.0 \
     ;
 
 # Two-stage build skips cleaning up build dependencies, caches, npm configuration.
